@@ -1,19 +1,26 @@
+sudo: required
+
+services:
+  - docker
+
 language: node_js
 node_js:
-  - '8'
+  - "9"
+
 env:
   secure: LyLfCtRtKSM4bnB0BEdS4qKUtfPqGaOafTB6m+rVkwHNtkb9dyTLX2KP/A8HlI/hajDJzTL4iyqpgHVYCT7Ae1WuBW5lMyF8EyRqD7izqZ7NcWAy+GDt9HZjf16C3tZnc4pUKRzOhT9tCFUhcH+RFuIPNM0OSSVHBtQZA6i7aSbzQ+iux9JUj4L81fi1B9x5bTBi5uoq6iN4dG/jsRe45Cy7FLkamHv3KF++TmLEkz5+ILy2r9/hs/uNw1yWFrigXwCYKkr94LreXzMP6UNGhqtCs78zAgta2fejHLaSdwQBuuVxB1ZMsOOwbSglOC3mlufIddPFs5BXYZIDd0+2RJBW3gfwgLdXYiQ8OBkCmBCxv07d6fLBaNv0yi9o3A7SOE52nRhkWe3pkEuOB37nRfYg1Mog05w8f/6VeZM8vBUoPVotZqk46Ex1Pf0yaNN8/eSQaWU2n66zJ+gac8hcD/sARSGPDf91GuW7vZwexjzfh861HjGYYEawx5wPiBDj7Y/xIQArs+8zlOWnhO0ignLswZ9jYxUa9ORSdD2D6EVkp4a1N7U6BjuZiVhjVSzRA+5zKSeVIu91cr1RFvOl4x80rC3wy6cHzEotUmo4yMEpm6N4Ob5Et08cBt9SlJ5uS5PAcUDK+2g1QFZGv2m8Fu3wfg4/X69abQSASXiTsKo=
-deploy:
-  skip_cleanup: true
-  provider: npm
-  email: zzswang@south.farm
-  api_key:
-    secure: Vk/MBsBsee/32aLluRHXcxLt99iKklCtC6RTxL/gQlZ8yJdTYlYnmjxcBAqpvBkHXnTwy/M00+IrJLWgC/Odl6V3XpIAivPvHo9iHFNXdPULAijjcdvLsES9VUZHoWAieUr7pycOVadtdzdLXIv2zc8mfofdIlc3h2QUyVCJV1nYBHLcBkvBKlzBbZPi6XRrlDRKVghk8/DdIUZvW5iBhhUvgERW0+j963MtIu84CziveZpWNSHKuoNgSHKaXn49XWFKCxRYOp7MB8YMXuU32cqKEOyTFP1ocHr7xuOVI3BxFPbcD2xniQjT3VbBYAJVLyq2kRfbRyx5qb90Mr5PeKY+b4iJsT9nBU2ldhEHfi1JkEA3NM1Tr9darPd56mcUkxgQcefFKHRSjUrlv2Ez5zsqB2cKCK79tZCYd03k3MVqKGmGqksDQoynEDX0tatvMdMz1xv9O9g2dH0IAMQ51tSBnXumLdS2KgQWFqI5Cpc2+f4UsXdiGjIus6KU2pEJFm8XuXFIllMPReQo7+6s+Wc0sY49SkkAdYLupx9bjIKLA7wBmUKiVU6k5W/0z69G9QZt/acakBs0HbNJ3CdHuVYElzcQGAO/aWxJIY5tjvg4oNazNEOXWhqiy7P0epMX54nrBK8NhZ92ML0sByiX7/7yPuFqs47GRJKCpl6OJsY=
-  on:
-    tags: true
-after_deploy:
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_TAG; fi`
-  - if ([ ! -z "$TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && ["$SKIP_BUILD" != "true" ]); then
+  global:
+    - DOCKER_REGISTRY=registry.us-west-1.aliyuncs.com
+    - DOCKER_REPO=$DOCKER_REGISTRY/36node/yuxi-service
+
+after_success:
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_TAG ; fi`
+  - if ([ ! -z "$TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$SKIP_BUILD" != "true" ]); then
+      echo "Starting build image with tag ${TAG}";
+      NODE_ENV=production npm run build && npm prune --production;
+      docker login -u $DOCKER_USER -p $DOCKER_PASS $DOCKER_REGISTRY;
+      docker build -t $DOCKER_REPO:$TAG .;
+      docker push $DOCKER_REPO:$TAG;
       echo "Slack notice on tag ${TAG}";
       curl -X POST -H 'Content-type:application/json' --data '{"text":"<https://github.com/south-farm/sketch-es-service|sketch-es-service> 发布 '$TAG' 版本。\n<https://github.com/south-farm/sketch-es-service/blob/master/CHANGELOG.md|看看有什么新货色>"}' $SLACK_URL;
     fi

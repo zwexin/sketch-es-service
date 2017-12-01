@@ -17,6 +17,7 @@
     "lint": "eslint src && remark . -qfo",
     "prepare": "npm run build",
     "release": "standard-version --no-verify && git push --follow-tags origin master",
+    "serve": "nodemon dist/index.js",
     "start": "nodemon src/index.js --watch src --exec 'npm test && babel-node'",
     "test": "npm run flow && npm run lint && jest"
   },

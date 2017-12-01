@@ -12,13 +12,13 @@ env:
   - secure: L2cWSgPShOYOkhGz1Bj1rbOW4GJuQ6QP1IUUdhvYIAd2KlCIFYT0EaMmw/+iMII+ozYGRxmjiu/drXNSMve6zU3XXIp2UxeoBO8cqrNH2+7Mlv5gMfZeL8g46/a7PQWO7jg8+sWLsNxxO8o91wKBTMfWjjxhIunk/pn8H9bbKT/o4Fev6E2tNMHeNapeyn1VYVZpfhYZ2Ek1J6hJf3CN23anNlTbYumschtOoS18gdPIF96dABJ0CbvY+t8feZdvz1C6D2b34wKe1oTXugBmFlWy8jtjspyHSlvB7qeJKO5vNEZDfRE8hFQJErayPWw+pLZkJs0Gglj3ZOKf6ODORh0z0HNnsa3WInwmJX6FGqtmdzY8bPfQ2qgMenn8E3J4EhHdFDv+53tmV6K/ZPvr65bk5X7TlNilwcw+FDzz4gebnWW2v7hIUNRlA1amvZmFqX6k2by0DGJbNouUQluO1TNcQxIRJ2y2co0d4XTugxk1/9nBWkuqSNxjrGwls6WsrDNsv7RIDjmLaop+338gp0WZFkgX/8GzbkRwFg6Wns5bv1b4NSCGLbMvPnXu52C2ZrwT+RlFbUHILINkfRIADeWxgnzEJTWqRbEXaU1Cb3sIEIY4IKV9GJGf+/CujNwAu9M86wVKGJcGX61XfbhBpdzgfSW7Ug4n7AeQwsN0qu0=
   - secure: abE2V9evVH6R85D14Sr9dfMkrDeYiDuNRrwolNvDpFhRw/AZLobWfirdPk2BkZme7UatBTLmi6FY2dFeurfE294o8Is/tLPsixuVHEJV+QScpnePmjQv9iML2CQLZUtCyJpN6Hampa7A5PIG8tbXLRtNaX0r6Fh54/gee4h4i5gwpRXdENhkyLdFZFzsrchD/iFmpLyxFNU9yWWN4xRv5WYwOi0sszp2EsM3cuXK8yW6N7oYYWJViXMpi9R5ie15JJwEIDqsjtCOolsA7thjSJxugtTVNOElh06jrgeQy3kY/PVQLCJ1lO6ZqRZzXejsL4IGMRuzd5qlEDDd8Jlz68Z6XHF3i8GNU5S+fCb5yqUPEGtRFxHMdNU9i6tOLmKbWXkWK0BvdR7x6wi62L8Gp6uyMwbp45xLLH6fc7Li9GvuqNdqSJD/gFJXmoH/RHN7yVWQvDTOtv9LBO6HdSAoBMeWbwyLpgAmyOhVdMkRDeG/AMA+5Z4+nyMkyqJxgQU8dlMVhMrOMpIyFrQIPyNrRWaAPRKh7Ysl1mzIdPgY3UYHQ3ff1zwG8jUiMYtSh4U1vPb7HG4t4vKbbrIh9H+HH06gVa6zXJNXUs5E4UiCvQ3b6yo7R5i5oc0NCVwhecLkPeKVTBjwi5yEFtOXQ07+Tpub0RnX1R7O3DHrGHrkr+A=
 after_success:
-- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_TAG
-  ; fi`
-- if ([ ! -z "$TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$SKIP_BUILD"
-  != "true" ]); then echo "Starting build image with tag ${TAG}"; NODE_ENV=production
-  npm run build && npm prune --production; docker login -u $DOCKER_USER -p $DOCKER_PASS
-  $DOCKER_REGISTRY; docker build -t $DOCKER_REPO:$TAG .; docker push $DOCKER_REPO:$TAG;
-  echo "Slack notice on tag ${TAG}"; curl -X POST -H 'Content-type:application/json'
-  --data '{"text":"<https://github.com/south-farm/sketch-es-service|sketch-es-service>
-  发布 '$TAG' 版本。\n<https://github.com/south-farm/sketch-es-service/blob/master/CHANGELOG.md|看看有什么新货色>"}'
-  $SLACK_URL; fi
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_TAG ; fi`
+- if ([ ! -z "$TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$SKIP_BUILD" != "true" ]); then
+    echo "Starting build image with tag ${TAG}";
+    NODE_ENV=production npm run build && npm prune --production;
+    docker login -u $DOCKER_USER -p $DOCKER_PASS $DOCKER_REGISTRY;
+    docker build -t $DOCKER_REPO:$TAG .;
+    docker push $DOCKER_REPO:$TAG;
+    echo "Slack notice on tag ${TAG}";
+    curl -X POST -H 'Content-type:application/json' --data '{"text":"<https://github.com/south-farm/sketch-es-service|sketch-es-service> 发布 '$TAG' 版本。\n<https://github.com/south-farm/sketch-es-service/blob/master/CHANGELOG.md|看看有什么新货色>"}' $SLACK_URL;
+  fi

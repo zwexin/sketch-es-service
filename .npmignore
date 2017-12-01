@@ -1,0 +1,8 @@
+src
+tmp
+
+.log
+.gitignore
+.babelrc
+.travis.yml
+CHANGELOG.md

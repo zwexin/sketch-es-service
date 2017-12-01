@@ -1,0 +1,73 @@
+{
+  "name": "@southfarm/sketch-es-service",
+  "version": "0.0.0",
+  "description": "A well done boiplate for micro service written in expressjs.",
+  "main": "./dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "south-farm/sketch-es-service",
+  "bugs": {
+    "url": "https://github.com/south-farm/sketch-es-service/issues"
+  },
+  "scripts": {
+    "build": "rm -rf dist && babel ./src -d ./dist --ignore test.js",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "lint": "eslint src && remark . -qfo",
+    "prepare": "npm run build",
+    "release": "standard-version --no-verify && git push --follow-tags origin master",
+    "start": "nodemon src/index.js --watch src --exec 'npm test && babel-node'",
+    "test": "npm run flow && npm run lint && jest"
+  },
+  "keywords": [
+    "node",
+    "micro service",
+    "es6",
+    "es7",
+    "jest",
+    "babel",
+    "flow",
+    "commitlint",
+    "husky"
+  ],
+  "license": "MIT",
+  "babel": {
+    "presets": [
+      "env",
+      "stage-0"
+    ],
+    "plugins": [
+      "transform-flow-strip-types"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "southfarm"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "body-parser": "1.18.2",
+    "cors": "2.8.4",
+    "dotenv": "4.0.0",
+    "express": "4.16.2",
+    "express-humps": "0.1.0",
+    "express-jwt": "5.3.0",
+    "express-swagger-fancy": "0.2.1",
+    "helmet": "3.9.0",
+    "http-status": "1.0.1",
+    "humps": "2.0.1",
+    "method-override": "2.3.10",
+    "morgan": "1.9.0"
+  },
+  "devDependencies": {
+    "@southfarm/es-dev-tools": "*",
+    "nodemon": "1.12.1"
+  }
+}

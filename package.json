@@ -1,6 +1,6 @@
 {
   "name": "@southfarm/sketch-es-service",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A well done boiplate for micro service written in expressjs.",
   "main": "./dist/index.js",
   "publishConfig": {

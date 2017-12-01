@@ -1,4 +1,4 @@
-FROM docker-hub.xrci.io/library/node:9-alpine
+FROM node:9-alpine
 
 ENV PORT=80 \
   NODE_ENV=production \

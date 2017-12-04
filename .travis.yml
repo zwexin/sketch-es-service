@@ -19,6 +19,8 @@ after_success:
     docker login -u $DOCKER_USER -p $DOCKER_PASS $DOCKER_REGISTRY;
     docker build -t $DOCKER_REPO:$TAG .;
     docker push $DOCKER_REPO:$TAG;
+  fi
+- if ([ ! -z "$TAG" ] && [ "$TRAVIS_BRANCH" != "master" ] && [ "$SKIP_BUILD" != "true" ]); then
     echo "Slack notice on tag ${TAG}";
-    curl -X POST -H 'Content-type:application/json' --data '{"text":"<https://github.com/south-farm/sketch-es-service|sketch-es-service> 发布 '$TAG' 版本。\n<https://github.com/south-farm/sketch-es-service/blob/master/CHANGELOG.md|看看有什么新货色>"}' $SLACK_URL;
+    curl -X POST -H 'Content-type:application/json' --data '{"text":"<https://github.com/zzswang/grape-college-api|grape-college-api> 发布 '$TAG' 版本。\n<https://github.com/zzswang/grape-college-api/blob/master/CHANGELOG.md|看看有什么新货色>"}' $SLACK_URL;
   fi

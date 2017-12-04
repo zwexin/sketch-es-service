@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === "development") {
  * main
  */
 app.use(cors({ exposedHeaders: ["Link"] })); // enable CORS - Cross Origin Resource Sharing
-app.use("/docs", swagger(path.join(__dirname, "../swagger.json")));
+app.use(`${BASE_PATH}/docs`, swagger(path.join(__dirname, "../swagger.json")));
 app.use(bodyParser.json({ limit: "100kb" }));
 app.use(humps());
 app.use(methodOverride());

@@ -27,10 +27,10 @@ A simple way to get start.
 npm install -g sao
 
 # start from latest
-sao south-farm/sketch-es-serivce my-service -u
+sao south-farm/sketch-es-service my-service -u
 
 # or start from sepecific version
-sao south-farm/sketch-es-serivce#v0.0.1 my-service
+sao south-farm/sketch-es-service#v0.0.1 my-service
 
 # after project is created
 cd my-service

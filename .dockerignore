@@ -1,0 +1,13 @@
+src
+.editorconfig
+.env
+.flowconfig
+.dockerignore
+.git
+.gitignore
+.npmignore
+.npmrc
+.prettierignore
+.travis.yml
+docker-compose.yml
+Dockerfile

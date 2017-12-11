@@ -1,6 +1,6 @@
 # sketch-es-serivce
 
-[![Build Status](https://travis-ci.org/south-farm/sketch-es-serivce.svg?branch=master)](https://travis-ci.org/south-farm/sketch-es-serivce)
+[![Build Status](https://travis-ci.org/south-farm/sketch-es-service.svg?branch=master)](https://travis-ci.org/south-farm/sketch-es-service)
 
 A simple boilerplate for micro service written in ES6/7.
 

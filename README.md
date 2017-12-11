@@ -48,43 +48,17 @@ this, we should paste a JWT in the token input.
 
 ### JWT
 
-Here is an example for generate JWT.
-
-Set your public key through envrionment
-
-```sh
-JWT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNdgZPtvnjWnyCxWfIzCrNqFR7\nlOXKl6xag5AB+6j9RRR3ZQXMEKvl/1wjZcMuxb5rs+u5HuJaf4LXmYszhpqUuALj\nGAbSPZZ+awoTvAdyd93iMoK0mh+B+7xkxkQ8bApqQ0q7UYBMb4vyQ/tWX0ubg9wb\nYXzLj7IbGhnyVDLNcQIDAQAB\n-----END PUBLIC KEY-----"
-```
-
-The private key for this:
-
-```sh
------BEGIN RSA PRIVATE KEY-----
-MIICXQIBAAKBgQCNdgZPtvnjWnyCxWfIzCrNqFR7lOXKl6xag5AB+6j9RRR3ZQXM
-EKvl/1wjZcMuxb5rs+u5HuJaf4LXmYszhpqUuALjGAbSPZZ+awoTvAdyd93iMoK0
-mh+B+7xkxkQ8bApqQ0q7UYBMb4vyQ/tWX0ubg9wbYXzLj7IbGhnyVDLNcQIDAQAB
-AoGARfuLp8gX29gaHP/YFkibLF8IXJMPE6jxhV3s0m5T7ehM9bwuoAPnZsNsK77e
-TrdZOyMpjM2woaDPdCXr7bO7qPBDKGEtRgp5GCwl4/apB/n4a+VoppGVWU/V/n/1
-uv56Ck/izc/+pKvqLkFymzeKERmCPIwwfq9Ab1BUE0f/qFkCQQD4um39K0fD68KN
-ribdrUeiF0rMy/qspXw5jzg+D59w06IDeAcmcd8bz0BKQilLq39IQg39MVP74IsG
-R1F9t/mXAkEAkZjE6ev0aIYfnIB7drQAZQ0WOOButa9gMEAbCQBNrGu5yN7t0Urf
-YvAUiOJvRkZ0m1YpxCR4apfjCo7OSS8CNwJBANYYw2xUwOVoHoOOEG5oJWzk18IJ
-IrFRkOiK20Kwd/HKeX665oy1H/L0JsbExH8aE+nC0f/LYhtBYOn6oa6xmekCQFYS
-0pbX/22rnRSQgGz0jScwTWrig5C1VVAxFcqEe2braLHv2PhaIyYCeKFT/CS3kkgi
-8B4c0XNyx65+LkXlnJECQQDCx9TRqUhfQYX+Tbwio3vQpaVEoHqYnp267xgNmTRW
-RGI+tXTVW1nJS/fGmeWDZx/V16G7+GNPGm/ighOaXDHb
------END RSA PRIVATE KEY-----
-```
-
-Then you can generate a JWT on site: [https://jwt.io](https://jwt.io)
-
-I've generated one:
+I've generated a jwt token for the default JWT_PUBLIC_KEY in config.js:
 
 ```sh
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.FsHyPJCxjQUdgZROKnHkSIMFSrM2Ecpuhxau3cU-cWfF2pRdYGwYqQQlRb91V4MEf0EjGYDwc-iFmhDb53ourDoJ8l7wMeBDT8Pl9wiCe1eNysA9vWBltwqOy2k6Y1MwXyfvv1pX_NUbjYcJ82I-KPryNqUjTF3N9RtOU7g8_oA
 ```
 
 Paste above token in swagger live doc, then test apis.
+
+You can generate a JWT on site: [https://jwt.io](https://jwt.io), use RS256 algorithm.
+
+Before it, we should get a RSA key pair. If you just want to get a quick one, use the [online tool](http://travistidwell.com/jsencrypt/demo/).
 
 Have fun!
 

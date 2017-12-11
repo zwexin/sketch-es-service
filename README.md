@@ -116,6 +116,16 @@ reponsiblity...
 * start: important, the very beginning from here, before change code
 * test: test
 
+## Environments
+
+**note:** It would be good if you define your environment with a prefix APP\_ .
+
+Example environments:
+
+* APP_PORT: service port
+* APP_BASE_PATH: service base path
+* APP_JWT_PUBLIC_KEY: a jwt public key
+
 ## Folder Layout
 
 Before you start, take a moment to see how the project structure looks like:

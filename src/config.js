@@ -8,9 +8,9 @@ import dotenv from "dotenv";
  *
  * Available settings
  *
- * PORT=9527
- * BASE_PATH=/v1
- * JWT_PUBLIC_KEY=`a public key string`
+ * APP_PORT=9527
+ * APP_BASE_PATH=/v1
+ * APP_JWT_PUBLIC_KEY=`a public key string`
  */
 
 dotenv.config();
@@ -29,6 +29,6 @@ const defaultBasePath = "/v1";
 /**
  * exports
  */
-export const PORT = safeEnv("PORT", defaultPort);
-export const BASE_PATH = safeEnv("BASE_PATH", defaultBasePath);
-export const JWT_PUBLIC_KEY = safeEnv("JWT_PUBLIC_KEY", "", true);
+export const PORT = safeEnv("APP_PORT", defaultPort);
+export const BASE_PATH = safeEnv("APP_BASE_PATH", defaultBasePath);
+export const JWT_PUBLIC_KEY = safeEnv("APP_JWT_PUBLIC_KEY", "", true);

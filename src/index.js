@@ -13,7 +13,7 @@ import swagger from "express-swagger-fancy";
 
 import api from "./api";
 import { PORT, BASE_PATH } from "./config";
-import { NotFoundError, errorHandler } from "./error";
+import status from "@southfarm/http-status";
 
 /**
  * initialize app
@@ -49,18 +49,30 @@ app.use(BASE_PATH, api());
  * 404
  */
 app.use((req, res, next) => {
-  next(new NotFoundError("Resouce not found"));
+  next(new status.NotFound("Resouce not found"));
 });
 
 /**
  * handleError
  */
-app.use(errorHandler);
+app.use((err, req, res, next) => {
+  let error = err;
+  if (!(err instanceof status.ExtendableError)) {
+    console.log(err);
+    error = new status.InternalError(err.message || err);
+  }
+
+  if (process.env.NODE_ENV !== "development") {
+    delete error.stack;
+  }
+
+  return res.status(error.statusCode).json(error);
+});
 
 /**
  * start app
  */
 server.listen(PORT);
-console.log(`Started on port ${server.address().port}`); // eslint-disable-line
+console.log(`Started on port ${PORT}`); // eslint-disable-line
 
 export default app;

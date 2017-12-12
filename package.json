@@ -15,7 +15,6 @@
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src",
-    "prepare": "npm run build",
     "release": "standard-version --no-verify && git push --follow-tags origin master",
     "server": "node dist/index.js",
     "start": "nodemon src/index.js --watch src --exec 'npm test && babel-node'",

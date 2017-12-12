@@ -18,9 +18,9 @@ Only with neccessary key features:
 * jwt
 * standard-version
 
-## Usage
+## How to use this template
 
-A simple way to get start.
+first generate the project
 
 ```sh
 # prepare [sao](https://sao.js.org)
@@ -34,13 +34,47 @@ sao south-farm/sketch-es-service#v0.0.1 my-service
 
 # after project is created
 cd my-service
+
+rm -rf package-lock.json CHANGELOG.md
+
+# remove license if you don't like MIT
+rm LICENSE
+```
+
+### Homework
+
+* Update your readme and package.json.
+* Update .travis.yml if you also use travis-ci, otherwise just delete it.
+* Update Dockerfile later.
+
+#### Travis-CI
+
+There are two environments should be cared about:
+
+* `DOCKER_REGISTRY`
+* `DOCKER_REPO`
+
+There are three environments should be ecrypted by youself.
+The `SLACK_URL` used for notifing your team members when a new version is published.
+
+```sh
+travis encrypt DOCKER_USER=you_user_name --add env.global
+travis encrypt DOCKER_PASS=you_password --add env.global
+travis encrypt SLACK_URL=https://hooks.slack.com/services/xxxx/xxxx/xxxxxxx --add env.global
+```
+
+## Usage
+
+A simple way to get start.
+
+```sh
 npm i
 
 # start development, keep testing while developing
 npm start
 ```
 
-After it is started, open localhost:9527/docs, you will see a beautiful document
+After it is started, open localhost:9527/v1/docs, you will see a beautiful document
 render from swagger.
 
 On this page, we can simply click "Try Button" to test the apis. But before
@@ -48,7 +82,7 @@ this, we should paste a JWT in the token input.
 
 ### JWT
 
-I've generated a jwt token for the default JWT_PUBLIC_KEY in config.js:
+I've generated a jwt token for you, along with the default JWT_PUBLIC_KEY in config.js:
 
 ```sh
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.FsHyPJCxjQUdgZROKnHkSIMFSrM2Ecpuhxau3cU-cWfF2pRdYGwYqQQlRb91V4MEf0EjGYDwc-iFmhDb53ourDoJ8l7wMeBDT8Pl9wiCe1eNysA9vWBltwqOy2k6Y1MwXyfvv1pX_NUbjYcJ82I-KPryNqUjTF3N9RtOU7g8_oA
@@ -56,27 +90,11 @@ eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
 
 Paste above token in swagger live doc, then test apis.
 
-You can generate a JWT on site: [https://jwt.io](https://jwt.io), use RS256 algorithm.
+You can generate a new JWT on site: [https://jwt.io](https://jwt.io), use RS256 algorithm.
 
 Before it, we should get a RSA key pair. If you just want to get a quick one, use the [online tool](http://travistidwell.com/jsencrypt/demo/).
 
 Have fun!
-
-### Travis-CI
-
-If you use travis too, there are two environments should be ecrypted by youself.
-
-If you don't use travis-ci, just delete it.
-
-```sh
-travis encrypt 684c6784-3677-49dc-95ea-be8c89f0ba85 --add deploy.api_key
-travis encrypt SLACK_URL=https://hooks.slack.com/services/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 --add env
-```
-
-### Homework
-
-Update your readme and package.json which is not in any of other one's
-reponsiblity...
 
 ## Scripts
 
@@ -84,7 +102,6 @@ reponsiblity...
 * flow: static code check
 * commitmsg: Commit message
 * lint: Code linter
-* prepare: run before public
 * release: update version and push to git
   [standard-version](https://github.com/conventional-changelog/standard-version).
 * start: important, the very beginning from here, before change code

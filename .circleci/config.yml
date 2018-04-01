@@ -35,8 +35,8 @@ jobs:
         
       # run tests!
       #- run: yarn test
-      - setup_remote_docker: 
-          docker_layer_caching: true
+      #- setup_remote_docker: 
+      #    docker_layer_caching: true
       #- run: |
       #    TAG=latest
       #    DOCKER_REGISTRY=registry.us-west-1.aliyuncs.com
